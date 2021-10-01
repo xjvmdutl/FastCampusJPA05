@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookNameAndCategory {
+//public interface BookNameAndCategory {
     private String name;
     private String category;
+    //String getCategory();
+    //String getName();
 }
