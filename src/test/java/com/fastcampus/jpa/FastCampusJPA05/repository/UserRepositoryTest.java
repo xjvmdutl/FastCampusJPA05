@@ -1,7 +1,9 @@
 package com.fastcampus.jpa.FastCampusJPA05.repository;
 
+import com.fastcampus.jpa.FastCampusJPA05.domain.Address;
 import com.fastcampus.jpa.FastCampusJPA05.domain.Gender;
 import com.fastcampus.jpa.FastCampusJPA05.domain.User;
+import com.fastcampus.jpa.FastCampusJPA05.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
@@ -17,6 +20,12 @@ import java.time.LocalDateTime;
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     @Transactional
@@ -141,5 +150,38 @@ class UserRepositoryTest {
     }
 
 
+
+    @Test
+    public void embedTest(){
+        userRepository.findAll().forEach(System.out::println);
+
+        User user = new User();
+        user.setName("steve");
+        //user.setAddress(new Address("서울시","강남구","강남대로 364 미왕대로","06241"));
+        user.setHomeAddress(new Address("서울시","강남구","강남대로 364 미왕대로","06241"));
+        user.setCompanyAddress(new Address("서울시","성동구","성수대로 113 제강빌딩","04794"));
+        userRepository.save(user);
+
+        User user1 = new User();
+        user1.setName("joshua");
+        user1.setHomeAddress(null);
+        user1.setCompanyAddress(null);
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setName("jordan");
+        user2.setHomeAddress(new Address());
+        user2.setCompanyAddress(new Address());
+
+        userRepository.save(user2);
+
+        entityManager.clear();
+
+        userRepository.findAll().forEach(System.out::println);
+        userHistoryRepository.findAll().forEach(System.out::println);
+
+        userRepository.findAllRowRecord().forEach(a-> System.out.println(a.values()));
+
+   }
 
 }

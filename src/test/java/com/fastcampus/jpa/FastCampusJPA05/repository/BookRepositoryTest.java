@@ -1,6 +1,7 @@
 package com.fastcampus.jpa.FastCampusJPA05.repository;
 
 import com.fastcampus.jpa.FastCampusJPA05.domain.Book;
+import com.fastcampus.jpa.FastCampusJPA05.repository.dto.BookStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -73,4 +74,17 @@ public class BookRepositoryTest {
 
         System.out.println(bookRepository.showTables());
     }
+
+    @Test
+    public void converterTest(){
+        bookRepository.findAll().forEach(System.out::println);
+        Book book = new Book();
+        book.setName("또다른 IT전문가 서적");
+        book.setStatus(new BookStatus(200));
+        bookRepository.save(book);
+
+        System.out.println(bookRepository.findRowRecord().values());
+    }
+
+
 }

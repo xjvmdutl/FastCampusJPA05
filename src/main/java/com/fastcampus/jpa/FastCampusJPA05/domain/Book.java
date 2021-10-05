@@ -1,6 +1,8 @@
 package com.fastcampus.jpa.FastCampusJPA05.domain;
 
+import com.fastcampus.jpa.FastCampusJPA05.domain.converter.BookStatusConverter;
 import com.fastcampus.jpa.FastCampusJPA05.domain.listener.Auditable;
+import com.fastcampus.jpa.FastCampusJPA05.repository.dto.BookStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -55,6 +57,9 @@ public class Book extends BaseEntity {
 
     private  boolean deleted;
 
+    //판매 상태값을 가지는 코드값 -> DB에는 int값을 가지고 있다.
+    //@Convert(converter = BookStatusConverter.class)
+    private BookStatus status;//판매상태
 
     public void addBookAndAuthor(BookAndAuthor... bookAndAuthor){
         Collections.addAll(this.bookAndAuthors,bookAndAuthor);

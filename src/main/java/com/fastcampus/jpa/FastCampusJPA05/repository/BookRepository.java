@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 import javax.persistence.Tuple;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface BookRepository extends JpaRepository<Book,Long> {
     @Modifying
@@ -55,4 +56,7 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     @Query(value = "show tables", nativeQuery = true)
     List<String> showTables();//일반적 JPA로 생성 불가능, native쿼리로 생성
+
+    @Query(value = "SELECT * FROM book ORDER BY id DESC limit 1",nativeQuery = true)
+    Map<String,Object> findRowRecord();
 }
